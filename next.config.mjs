@@ -1,7 +1,3 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    experimental: {
-      allowedDevOrigins: ['*'], // Permite todas as origens
-    },
-  };
-export default nextConfig;
+module.exports = {
+    allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
+  }
