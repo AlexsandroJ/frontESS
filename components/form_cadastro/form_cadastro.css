@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Freeman&family=Quicksand:wght@300..700&family=Sevillana&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Freeman&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Quicksand:wght@300..700&family=Sevillana&display=swap');
+
+#container {
+    display: flex;
+    width: 64%;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+h1 {
+    font-family: 'Freeman', serif;
+    font-size: 70px;
+}
+
+.label {
+    font-family: "Nunito", serif;
+    font-size: 24px
+}
+
+#ent:enabled {
+    font-family: 'Freeman', serif;
+    font-size: 30px;
+    border: 1px solid #F9A826;
+    border-radius: 39px;
+    width: 307px;
+    height: 77px;
+    padding: 5px;
+    background: #F9A826;
+    color: #FFFFFF;
+}
+
+#title {
+    color: #387478;
+}
+
+#enter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background: transparent;
+}
+
+#nome, #e-mail, #password, #confirm-password {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #387478;
+    border-radius: 39px;
+    font-family: 'nunito';
+    width: 427px;
+    height: 78px;
+    padding: 15px;
+    background: transparent;
+    color: #387478;
+}
+
+#nome::placeholder, #e-mail::placeholder, #password::placeholder, #confirm-password::placeholder {
+    color: #387478;
+    opacity: 1;
+}
+
+input {
+    font-family: "Nunito", serif;
+    font-size: 24px;
+}
+
+#e-mail:focus, #password:focus {
+    color: #387478;
+}
+
+#name-incorrect, #email-incorrect, #password-incorrect, #confirm-incorrect {
+    position: absolute;
+    top: 47%;
+    right: 5%;
+}
+
+.error-message {
+    color: #FD0808;
+    font-family: "Nunito", serif;
+    font-size: 24px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    margin-top: 10px;
+    text-align: start;
+    color: #387478;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: purple;
+}
+
+label {
+    margin-left: 15px;
+}
+
+input:focus {
+    outline: none;
+}
+
+#message {
+    color: transparent;
+}
+
+#ent:hover:enabled {
+    border: 2px solid #243642;
+    color: #243642;
+    cursor: pointer;
+}
+
+#ent:disabled {
+    background-color: #ccc;
+    color: #888;
+    cursor: not-allowed;
+    font-family: 'Freeman', serif;
+    font-size: 30px;
+    border-radius: 39px;
+    width: 307px;
+    height: 77px;
+    padding: 5px;
+}
+
+.nome, .email, .senha, .confirm-senha {
+    position: relative;
+}

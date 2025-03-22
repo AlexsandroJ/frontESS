@@ -1,14 +1,21 @@
+'use client';
+
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faSearch } from '@fortawesome/free-solid-svg-icons'; // Importando os ícones
 import { UserCircleIcon } from '@heroicons/react/24/solid';
+import ProfileModal from '../components/Modal';
 
 const Header = () => {
     const [isSearchVisible, setIsSearchVisible] = useState(false); // Estado para controlar a visibilidade da barra de busca
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
     return (
         <header className="flex items-center justify-between lg:px-30 bm:px-6 bg-[#387478] text-white h-30">
-           
+
 
             {/* Barra de Pesquisa */}
             <div className='flex-grow mx-4 flex   '>
@@ -21,14 +28,15 @@ const Header = () => {
                     <FontAwesomeIcon
                         icon={faSearch} // Ícone de pesquisa dentro da barra de busca
                         className="absolute right-0 mr-2 hover:text-yellow-400 text-black cursor-pointer h-4 w-4"
-                        //onClick={() => setIsSearchVisible(false)} // Oculta a barra de busca quando clicado
+                    //onClick={() => setIsSearchVisible(false)} // Oculta a barra de busca quando clicado
                     />
                 </div>
             </div>
 
             {/* Ícone de Perfil */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0" onClick={toggleModal} >
                 <UserCircleIcon className="w-20  hover:text-yellow-400" />
+                {isModalOpen && <ProfileModal onClose={toggleModal}  />}
             </div>
         </header>
     );

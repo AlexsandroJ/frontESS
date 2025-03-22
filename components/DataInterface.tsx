@@ -5,23 +5,40 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faTrash, faPen, faSave, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const UserEmail = 'ajs6@gmail.com';
-
+let UserEmail = 'ajs6@gmail.com';
+const UserName = 'alex'
 const urlApi = process.env.NEXT_PUBLIC_API_URL;
 
 const NotesList = () => {
   const api = axios.create({
     baseURL: urlApi, // URL do backend
   });
-
+  
   const [notes, setNotes] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [newNote, setNewNote] = useState({ title: "", note: "" }); // Estado para nova nota
 
   const fetchNotes = async () => {
     try {
-      console.log(urlApi);
+      const userName = JSON.parse(localStorage.getItem('userName') || '{}');
+      
+      if(userName){
+        const user = await api.get(`/users/find/${userName}`);
+        UserEmail = user.data.email;
+        localStorage.setItem('userEmail', JSON.stringify(UserEmail));
+      }
+
       const response = await api.get(`/notes/${UserEmail}`);
+      
+      //const user  = await api.get(`/user/${UserEmail}`);
+      //const userInfo = {
+      //  name: UserName,
+      //  email: UserEmail
+      //};
+      //localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+      // Recupera os dados do localStorage
+      
       
       setNotes(response.data.notes);
     } catch (error) {

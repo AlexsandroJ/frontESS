@@ -1,0 +1,26 @@
+#home {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    transition: all 0.7s ease;
+    position: relative;
+}
+
+#sidebar {
+    z-index: 1;
+}
+
+#content {
+    width: 64vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    transition: transform 0.7s ease;
+    z-index: -1;
+}
+
+.move-to-left {
+    transform: translateX(-36vw);
+}
