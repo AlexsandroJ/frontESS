@@ -72,7 +72,7 @@ services:
       - net-geral
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://ip172-18-0-16-cvf8khq91nsg00bs1rb0-5001.direct.labs.play-with-docker.com
+      - NEXT_PUBLIC_API_URL=http://api:5001
 
     restart: always
 
