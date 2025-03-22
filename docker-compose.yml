@@ -39,6 +39,7 @@ services:
       - mongo
 
   api:
+    container_name: api
     build:
       context: .
       dockerfile: Dockerfile-api
@@ -61,6 +62,7 @@ services:
         - mongo
 
   front:
+    container_name: front
     build:
       context: .
       dockerfile: Dockerfile-next
