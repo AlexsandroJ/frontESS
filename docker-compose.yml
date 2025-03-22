@@ -75,7 +75,7 @@ services:
       - NEXT_PUBLIC_API_URL=http://api:5001
 
     restart: always
-
+    pull_policy: always
     depends_on:
         - api
 
