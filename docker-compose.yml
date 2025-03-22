@@ -10,7 +10,6 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongo
-    restart: always
     volumes:
       - mongo-data:/data/db
     environment:
@@ -19,7 +18,7 @@ services:
     ports:
       - 27017:27017
     networks:
-      - net-mongo
+      - net-geral:
     restart: always
 
   mongo-express:
@@ -35,7 +34,7 @@ services:
     ports:
       - 8081:8081
     networks:
-      - net-mongo
+      - net-geral:
     depends_on:
       - mongo
 
@@ -45,6 +44,8 @@ services:
       dockerfile: Dockerfile-api
     ports:
       - "5001:5001"
+    networks:
+      - net-geral:
     environment:
       - NODE_ENV=production
       - PORT=5001
@@ -56,7 +57,6 @@ services:
       - DB_NAME=tests
       - DEV=false
     restart: always
-    
     depends_on:
         - mongo
 
@@ -66,6 +66,8 @@ services:
       dockerfile: Dockerfile-next
     ports:
       - 3000:3000
+    networks:
+      - net-geral:
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=http://api:5001
