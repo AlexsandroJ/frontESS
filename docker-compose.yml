@@ -1,0 +1,77 @@
+
+volumes:
+  mongo-data:
+
+networks:
+  net-geral:
+
+services:
+ 
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    networks:
+      - net-mongo
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    container_name: express
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_AUTH_USERNAME  : root
+      ME_CONFIG_MONGODB_AUTH_PASSWORD  : example
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - net-mongo
+    depends_on:
+      - mongo
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+
+      - DB_USER=root
+      - DB_PASS=example
+      - DB_HOST=http://mongo:5001
+      - DB_PORT=27017
+      - DB_NAME=tests
+      - DEV=false
+    restart: always
+    
+    depends_on:
+        - mongo
+
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile-next
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://api:5001
+
+    restart: always
+
+    depends_on:
+        - api
+

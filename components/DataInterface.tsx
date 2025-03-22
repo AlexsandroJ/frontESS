@@ -7,9 +7,11 @@ import { faArrowLeft, faTrash, faPen, faSave, faTimes, faPlus } from '@fortaweso
 
 const UserEmail = 'ajs6@gmail.com';
 
+const urlApi = process.env.NEXT_PUBLIC_API_URL;
+
 const NotesList = () => {
   const api = axios.create({
-    baseURL: "http://ip172-18-0-5-cvf6p32im2rg00et5k20-5001.direct.labs.play-with-docker.com", // URL do backend
+    baseURL: urlApi, // URL do backend
   });
 
   const [notes, setNotes] = useState([]);
