@@ -9,7 +9,7 @@ const UserEmail = 'ajs6@gmail.com';
 
 const NotesList = () => {
   const api = axios.create({
-    baseURL: "http://localhost:5001", // URL do backend
+    baseURL: "http://ip172-18-0-5-cvf6p32im2rg00et5k20-5001.direct.labs.play-with-docker.com", // URL do backend
   });
 
   const [notes, setNotes] = useState([]);
