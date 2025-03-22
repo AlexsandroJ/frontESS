@@ -71,7 +71,7 @@ services:
     networks:
       - net-geral
     environment:
-      - NODE_ENV=production
+    
       - NEXT_PUBLIC_API_URL=http://api:5001
 
     restart: always

@@ -2,7 +2,7 @@
 const nextConfig = {
     //experimental: {
       
-      allowedDevOrigins: ['*'], // Permite todas as origens
+      allowedDevOrigins: ['*'] // Permite todas as origens
     //},
   };
 export default nextConfig;
