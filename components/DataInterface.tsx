@@ -20,7 +20,9 @@ const NotesList = () => {
 
   const fetchNotes = async () => {
     try {
+      
       const response = await api.get(`/notes/${UserEmail}`);
+      console.log(response.config);
       setNotes(response.data.notes);
     } catch (error) {
       console.error("Erro ao buscar notas:", error);
