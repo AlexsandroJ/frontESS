@@ -3,7 +3,7 @@ describe('Testes de Interface Notas de Usuario', () => {
 
   beforeEach(() => {
     //cy.visit('http://opinai.ddns.net/notes');
-    cy.visit('http://localhost:3000/notes/');
+    cy.visit('http://localhost:3000/notes');
   });
 
   it('Deve visualizar notas', () => {
