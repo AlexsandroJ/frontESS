@@ -2,15 +2,65 @@ import { useEffect, useState, useRef } from 'react';
 import './form_login.css';
 
 export default function FormLogin() {
-
-    const urlApi = process.env.NEXT_PUBLIC_API_URL;
-
     const [showSvgEmail, setShowSvgEmail] = useState(false);
     const [showSvgPassword, setShowSvgPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('a');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [userData, setUserData] = useState(null);
     const btn_entrar = useRef(null);
+
+    useEffect(() => {
+        const urlApi = process.env.NEXT_PUBLIC_API_URL;
+
+        const form = document.getElementById('form');
+
+        async function sendForm(event) {
+            event.preventDefault();
+            const response = await fetch(`${urlApi}/users/login`, {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            const mensagem = data.error + '!';
+
+            setUserData(data);
+            setShowSvgEmail(false);
+            setShowSvgPassword(false);
+
+            document.getElementById('e-mail').style.border = '';
+            document.getElementById('password').style.border = '';
+
+            if (response.ok) {
+                setErrorMessage(`Bem-vindo, ${data.user.name}!`);
+                message.style.color = 'green';
+                localStorage.setItem('userData', JSON.stringify(userData));
+                setTimeout(() => {
+                    window.location.href = '/pages/teste';
+                }, 200);
+            } else {
+                setErrorMessage(mensagem);
+                if (mensagem === 'Usuário não encontrado!') {
+                    setShowSvgEmail(true);
+                    document.getElementById('e-mail').style.border = '2px solid #FD0808';
+                }
+                else if (mensagem === 'Senha incorreta!') {
+                    setShowSvgPassword(true);
+                    document.getElementById('password').style.border = '2px solid #FD0808';
+                }
+                message.style.color = '#FD0808';
+            }
+        }
+
+        form.addEventListener('submit', sendForm);
+
+        return () => {
+            form.removeEventListener('submit', sendForm);
+        }
+    });
 
     useEffect(() => {
         if (email !== '' && password !== '') {

@@ -161,6 +161,7 @@ export default function NotesList() {
       {notes.length > 0 ? (
         <ul className="space-y-4 p-4 ">
           {notes.map((note, index) => (
+            
             <li
               key={index}
               className="p-4 border-none rounded-lg shadow-md bg-white hover:bg-yellow-400 sm:p-6"
@@ -183,7 +184,8 @@ export default function NotesList() {
                   </div>
                   <div>
                     <label className="block font-medium">
-                      <strong>Nota:</strong>
+                    
+                      <strong> Nota :</strong>
                       <input
                         type="text"
                         id='newNota'
