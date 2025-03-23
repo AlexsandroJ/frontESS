@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:web": "npx cypress open",
+    "test": "npx cypress run --browser chrome"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -28,6 +30,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/node": "22.13.10",
     "@types/react": "19.0.11",
+    "cypress": "^14.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
     "tailwindcss": "^4"

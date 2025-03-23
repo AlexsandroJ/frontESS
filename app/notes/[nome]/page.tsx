@@ -1,17 +1,17 @@
 // pages/notes/index.js
-"use client"
 
-import DataInterface from '../../../components/DataInterface';
+import DataInterface from '../../../components/DataInterfaceDinamic';
 import Header from '../../../components/Header';
+//import React, { useState, useEffect } from "react";
 
-
-export default function Home({ params }) {
-    const { nome } = params;
-    localStorage.setItem('userName', JSON.stringify(nome));
+export default async function Home({ params }) {
+  const resolvedParams = await params;
+  const { nome } = resolvedParams;
+ 
   return (
     <div>
       <Header/>
-      <DataInterface />
+      <DataInterface nome={nome} />
     </div>
   );
 }

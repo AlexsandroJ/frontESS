@@ -10,7 +10,7 @@ let UserEmail = 'ajs6@gmail.com';
 const Name = 'alex'
 const urlApi = process.env.NEXT_PUBLIC_API_URL;
 
-export default function NotesList() {
+export default function NotesList ({ nome })  {
   // States de dados
   const [notes, setNotes] = useState([]);
   const [email, setEmail] = useState("ajs6@gmail.com");
@@ -27,7 +27,18 @@ export default function NotesList() {
 
   const fetchNotes = async () => {
     try {
-      const user = await api.get(`/users/find/${Name}`);
+      //const userName = JSON.parse(localStorage.getItem('userName') || '');
+      if(nome !== ''){
+        
+        const user = await api.get(`/users/find/${nome}`);
+        UserEmail = user.data.email;
+        localStorage.setItem('userEmail', JSON.stringify(UserEmail));
+      }else{
+        const user = await api.get(`/users/find/${Name}`);
+        UserEmail = user.data.email;
+        localStorage.setItem('userEmail', JSON.stringify(UserEmail));
+      }
+      
       const response = await api.get(`/notes/${UserEmail}`);
       setNotes(response.data.notes);
     } catch (error) {
@@ -39,7 +50,7 @@ export default function NotesList() {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  },[]);
 
   const handleDelete = async (index) => {
     const delNote = notes[index];
