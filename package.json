@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:web": "npx cypress open",
-    "test": "npx cypress run --browser chrome"
+    "test": "npx cypress run --browser chrome",
+    "cy:run": "npx cypress run --spec '/**/*.feature'"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -26,6 +27,8 @@
     "tw-animate-css": "^1.2.4"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "22.13.10",
@@ -34,5 +37,12 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
     "tailwindcss": "^4"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/e2e/[filepath]/**/*.{js,ts}",
+      "cypress/e2e/[filepath].{js,ts}",
+      "cypress/support/step_definitions/**/*.{js,ts}"
+    ]
   }
 }

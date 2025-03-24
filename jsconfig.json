@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // Define a raiz do projeto como base para resolução de caminhos
     "paths": {
-      "@/*": ["./*"]
-    }
-  }
+      "@support/*": ["cypress/support/*"], // Exemplo de alias para pastas específicas
+      "@fixtures/*": ["cypress/fixtures/*"]
+    },
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["cypress/**/*.ts", "cypress/**/*.js"],
+  "exclude": ["node_modules"]
 }
