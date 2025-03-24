@@ -11,6 +11,7 @@ export default function FormCadastro() {
     const [showSvgPassword, setShowSvgPassword] = useState(false);
     const [showSvgConfirm, setShowSvgConfirm] = useState(false);
     const [errorMessage, setErrorMessage] = useState('a');
+    const [userName, setuserName] = useState(null);
 
     const svgCode_name = `
         <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,51 +65,46 @@ export default function FormCadastro() {
             const email = document.getElementById('e-mail').value;
             const password = document.getElementById('password').value;
 
-            try {
-                const response = await fetch(`${urlApi}/users/add`, {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name, email, password })
-                });
+            const response = await fetch(`${urlApi}/users/add`, {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await response.json();
+            const mensagem = data.error + '!';
             
-                const data = await response.json();
-                const mensagem = data.message + '!';
-    
-                setErrorMessage(mensagem);
-                setShowSvgName(false);
-                setShowSvgEmail(false);
-                setShowSvgPassword(false);
-    
-                document.getElementById('nome').style.border = '';
-                document.getElementById('e-mail').style.border = '';
-                document.getElementById('password').style.border = '';
+            setErrorMessage(mensagem);
+            setShowSvgName(false);
+            setShowSvgEmail(false);
+            setShowSvgPassword(false);
+            setuserName(data);
+
+            document.getElementById('nome').style.border = '';
+            document.getElementById('e-mail').style.border = '';
+            document.getElementById('password').style.border = '';
+            
+            if (response.ok) {
+                setErrorMessage(`Conta criada com sucesso!`);
+                message.style.color = 'green';
                 
-                if (response.ok) {
-                    message.style.color = 'green';
-                    setTimeout(() => {
-                        window.location.href = '/pages/teste';
-                    }, 200);
-                } else {
-                    if (mensagem === 'Username já cadastrado!') {
-                        setShowSvgName(true);
-                        document.getElementById('nome').style.border = '2px solid #FD0808';
-                    }
-                    else if (mensagem === 'Email já cadastrado!') {
-                        setShowSvgEmail(true);
-                        document.getElementById('e-mail').style.border = '2px solid #FD0808';
-                    }
-                    else if (mensagem === 'A senha deve ter pelo menos 8 caracteres!') {
-                        setShowSvgPassword(true);
-                        document.getElementById('password').style.border = '2px solid #FD0808';
-                    }
-                    message.style.color = '#FD0808';
+            } else {
+                if (mensagem === 'Username já cadastrado!') {
+                    setShowSvgName(true);
+                    document.getElementById('nome').style.border = '2px solid #FD0808';
                 }
-            } catch (error) {
-                console.log(" fetch erro:",error);
+                else if (mensagem === 'Email já cadastrado!') {
+                    setShowSvgEmail(true);
+                    document.getElementById('e-mail').style.border = '2px solid #FD0808';
+                }
+                else if (mensagem === 'A senha deve ter pelo menos 8 caracteres!') {
+                    setShowSvgPassword(true);
+                    document.getElementById('password').style.border = '2px solid #FD0808';
+                }
+                message.style.color = '#FD0808';
             }
-            
         }
 
         name.addEventListener('input', verificarSenhas);

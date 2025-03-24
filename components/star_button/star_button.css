@@ -1,0 +1,18 @@
+
+.star-rating {
+    display: flex;
+    justify-content: space-between; 
+    width: 250px; 
+  }
+  
+.star {
+    width: 50px;
+    height: 50px;
+    cursor: pointer; 
+    padding: 0px;
+}
+  
+.star:hover {
+    fill: #F9A826; 
+}
+  

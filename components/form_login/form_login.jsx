@@ -1,33 +1,35 @@
 import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import './form_login.css';
 
 export default function FormLogin() {
+    const urlApi = process.env.NEXT_PUBLIC_API_URL;
+
     const [showSvgEmail, setShowSvgEmail] = useState(false);
     const [showSvgPassword, setShowSvgPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('a');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState(null);
+    const [userName, setuserName] = useState(null);
     const btn_entrar = useRef(null);
+    const router = useRouter();
 
     useEffect(() => {
-        const urlApi = process.env.NEXT_PUBLIC_API_URL;
-
         const form = document.getElementById('form');
 
         async function sendForm(event) {
             event.preventDefault();
-            const response = await fetch(`${urlApi}/users/login`, {
+            const response = await etch(`${urlApi}/users/login`, {
                 method: "POST",
                 headers: {
-                "Content-Type": "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ email, password })
             });
             const data = await response.json();
             const mensagem = data.error + '!';
 
-            setUserData(data);
+            setuserName(data);
             setShowSvgEmail(false);
             setShowSvgPassword(false);
 
@@ -37,10 +39,9 @@ export default function FormLogin() {
             if (response.ok) {
                 setErrorMessage(`Bem-vindo, ${data.user.name}!`);
                 message.style.color = 'green';
-                localStorage.setItem('userData', JSON.stringify(userData));
-                setTimeout(() => {
-                    window.location.href = '/pages/teste';
-                }, 200);
+                localStorage.setItem('userName', JSON.stringify(data));
+                localStorage.setItem('userToken', JSON.stringify(data.token));
+                router.push('/pages/initial_page'); // Redireciona para a tela inicial
             } else {
                 setErrorMessage(mensagem);
                 if (mensagem === 'Usuário não encontrado!') {
@@ -60,7 +61,7 @@ export default function FormLogin() {
         return () => {
             form.removeEventListener('submit', sendForm);
         }
-    });
+    }, [email, password, router]);
 
     useEffect(() => {
         if (email !== '' && password !== '') {
@@ -80,7 +81,7 @@ export default function FormLogin() {
     `;
     const svgCode_password = svgCode_email;
 
-    return ( 
+    return (
         <div id="container">
             <div id="title">
                 <h1>LOGIN</h1>
@@ -100,7 +101,7 @@ export default function FormLogin() {
                     </div>
 
                     <p id='message' className="error-message">{errorMessage}</p>
-                    <button id="ent" ref={btn_entrar}disabled>ENTRAR</button>
+                    <button id="ent" ref={btn_entrar} disabled>ENTRAR</button>
                 </form>
             </div>
         </div>

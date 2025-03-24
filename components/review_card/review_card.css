@@ -1,0 +1,26 @@
+.review-card {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+  
+  .review-card h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .review-card p {
+    margin: 5px 0;
+    color: #333;
+  }
+  
+  .like-review {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .like-review span {
+    margin-right: 10px;
+    color: #666;
+  }
+

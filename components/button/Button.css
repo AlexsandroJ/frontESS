@@ -1,0 +1,22 @@
+.my-button {
+    background-color: #387478;
+    color: white;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px; 
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: 200px; 
+    height: 40px;
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+
+.my-button:hover {
+    background-color: #5d8184;
+}

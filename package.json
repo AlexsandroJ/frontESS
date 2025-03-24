@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT || next start -p 80",
     "lint": "next lint",
     "test:web": "npx cypress open",
     "test": "npx cypress run --browser chrome",
