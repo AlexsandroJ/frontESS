@@ -28,7 +28,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 # Expose the port that Next.js runs on
-EXPOSE 8080
+EXPOSE 80
 
 # Start the application
 CMD ["npm", "start"]
