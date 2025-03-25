@@ -1,5 +1,7 @@
 import { BeforeAll, AfterAll,Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
+const BASE_URL = 'http://opinai.ddns.net';
+
 // Variável para armazenar as notas atuais
 let currentNotes = [];
 const notes = [
@@ -17,7 +19,7 @@ const notes = [
   }
 ]
 BeforeAll(() => {
-  cy.visit("http://localhost:3000/notes");
+  cy.visit(`${BASE_URL}/notes`);
   notes.forEach((note) => {
     cy.get('input[placeholder="Digite o título"]').type(note.title);
     cy.get('input[placeholder="Digite a nota"]').type(note.note);
@@ -29,40 +31,25 @@ BeforeAll(() => {
 });
 
 AfterAll(() => {
-  cy.visit("http://localhost:3000/notes");
-
+  cy.visit(`${BASE_URL}/notes`);
   notes.forEach((note) => {
-    
     cy.contains('.font-medium', note.title)
-    .closest('.space-y-2') // Navega para o elemento pai (bloco da nota)
-    .find('#dell') // Localiza o botão de remoção dentro do bloco
+    .closest('.space-y-2') 
+    .find('#dell') 
     .click();
-
   });
-
 });
 
-
 Given("as seguintes notas do usuario {string} existem:", (userEmail, dataTable) => {
-
-  cy.visit("http://localhost:3000/notes");
-  
-  //cy.get('button[aria-label="Limpar notas"]').click(); // Exemplo de botão para limpar notas
+  cy.visit(`${BASE_URL}/notes`);
 
   currentNotes = dataTable.hashes();
-  // Preenche as notas iniciais
   currentNotes.forEach((note) => {
-    //cy.get('input[placeholder="Digite o título"]').type(note.title);
-    //cy.get('input[placeholder="Digite a nota"]').type(note.note);
-    //cy.get('button[type="submit"]').click();
-
     cy.contains(note.title).should('exist');
     cy.contains(note.note).should('exist');
   });
-  
 });
 
-// When: Adiciona uma nova nota
 When(
   "adiciono uma nova nota para o title {string}, com o seguinte texto {string} do usuario {string}",
   (title, noteText, userEmail) => {
@@ -70,47 +57,37 @@ When(
     cy.get('input[placeholder="Digite a nota"]').type(noteText);
     cy.get('button[type="submit"]').click();
 
-    // Atualiza a lista de notas
     currentNotes.push({ title, note: noteText });
   }
 );
 
-// When: Edita uma nota existente
 When(
   "edito a nota do title {string} para {string} do usuario {string}",
   (oldTitle, newNoteText, userEmail) => {
-    // Localiza a nota pelo título e clica no botão de edição
-    cy.contains('.font-medium', oldTitle)
-      .closest('.space-y-2') // Navega para o elemento pai (bloco da nota)
-      .find('#edit') // Localiza o botão de edição dentro do bloco
-      .click();
 
-    // Edita o campo de nota
+    cy.contains('.font-medium', oldTitle)
+      .closest('.space-y-2') 
+      .find('#edit') 
+      .click();
+ 
     cy.get('input#newNota')
       .clear()
       .type(newNoteText);
 
-    // Salva a alteração
     cy.get("#save").click();
-    
   }
 );
-// When: Remove uma nota existente
-When("remover a nota do title {string} do usuario {string}", (titleToRemove, userEmail) => {
-  // Localiza a nota pelo título e clica no botão de remoção
-  cy.contains('.font-medium', titleToRemove)
-    .closest('.space-y-2') // Navega para o elemento pai (bloco da nota)
-    .find('#dell') // Localiza o botão de remoção dentro do bloco
-    .click();
 
-  // Atualiza a lista de notas removendo a nota excluída
-  //currentNotes = currentNotes.filter((note) => note.title !== titleToRemove);
+When("remover a nota do title {string} do usuario {string}", (titleToRemove, userEmail) => {
+  cy.contains('.font-medium', titleToRemove)
+    .closest('.space-y-2') 
+    .find('#dell') 
+    .click();
 });
-// Then: Verifica se as notas estão corretas
+
 Then("as seguintes notas devem existir do usuario {string}:", (userEmail, dataTable) => {
   const expectedNotes = dataTable.hashes();
 
-  // Verifica se cada nota esperada está presente na interface
   expectedNotes.forEach((expectedNote) => {
     cy.contains(expectedNote.title).should("exist");
     cy.contains(expectedNote.note).should("exist");

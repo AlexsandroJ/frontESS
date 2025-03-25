@@ -19,7 +19,7 @@ export default function FormLogin() {
 
         async function sendForm(event) {
             event.preventDefault();
-            const response = await etch(`${urlApi}/users/login`, {
+            const response = await fetch(`${urlApi}/users/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
